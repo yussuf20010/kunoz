@@ -40,7 +40,7 @@ import { CoreNative } from '@features/native/services/native';
 export class CoreSettingsGeneralPage {
 
     languages: { code: string; name: string }[] = [];
-    selectedLanguage = '';
+    selectedLanguage = 'ar';
     zoomLevels: { value: CoreZoomLevel; style: number; selected: boolean }[] = [];
     selectedZoomLevel = CoreZoomLevel.NONE;
     richTextEditor = true;
@@ -91,12 +91,12 @@ export class CoreSettingsGeneralPage {
         this.selectedZoomLevel = await CoreSettingsHelper.getZoomLevel();
 
         this.zoomLevels = Object.keys(CoreConstants.CONFIG.zoomlevels).map((value: CoreZoomLevel) =>
-            ({
-                value,
-                // Absolute pixel size based on 1.4rem body text when this size is selected.
-                style: Math.round(CoreConstants.CONFIG.zoomlevels[value] * 16 / 100),
-                selected: value === this.selectedZoomLevel,
-            }));
+        ({
+            value,
+            // Absolute pixel size based on 1.4rem body text when this size is selected.
+            style: Math.round(CoreConstants.CONFIG.zoomlevels[value] * 16 / 100),
+            selected: value === this.selectedZoomLevel,
+        }));
 
         this.richTextEditor = await CoreConfig.get(CoreConstants.SETTINGS_RICH_TEXT_EDITOR, true);
 
@@ -122,7 +122,6 @@ export class CoreSettingsGeneralPage {
         const previousLanguage = await CoreLang.getCurrentLanguage();
         if (this.selectedLanguage === previousLanguage) {
             // Prevent opening again.
-
             return;
         }
 
@@ -130,6 +129,9 @@ export class CoreSettingsGeneralPage {
 
         try {
             await CoreLang.changeCurrentLanguage(this.selectedLanguage);
+
+            // Apply direction change based on the selected language.
+            this.changePageDirection(this.selectedLanguage);
         } finally {
             const langName = this.languages.find((lang) => lang.code == this.selectedLanguage)?.name;
 
@@ -163,6 +165,17 @@ export class CoreSettingsGeneralPage {
                 await alert.dismiss();
                 this.applyLanguageAndRestart();
             }, 10000);
+        }
+    }
+
+    /**
+     * Change the direction of the page based on the selected language.
+     */
+    protected changePageDirection(languageCode: string): void {
+        if (languageCode === 'ar') {
+            document.documentElement.setAttribute('dir', 'rtl');  // Set RTL direction
+        } else {
+            document.documentElement.setAttribute('dir', 'ltr');  // Set LTR direction
         }
     }
 
@@ -249,7 +262,7 @@ export class CoreSettingsGeneralPage {
      *
      * @param ev Event
      */
-    async analyticsEnabledChanged(ev: Event):  Promise<void> {
+    async analyticsEnabledChanged(ev: Event): Promise<void> {
         ev.stopPropagation();
         ev.preventDefault();
 

@@ -22,10 +22,6 @@
                     <!-- Show site logo. -->
                     <img class="core-usermenu-site-logo" *ngIf="siteLogo && siteLogoLoaded" [src]="siteLogo" role="presentation" alt=""
                         core-external-content onError="this.class='image-not-found'">
-                    <p class="core-usermenu-sitename">
-                        <core-format-text [text]="siteName" contextLevel="system" [contextInstanceId]="0" [wsNotFiltered]="true" />
-                    </p>
-                    <a [href]="siteUrl" core-link class="core-usermenu-siteurl">{{ siteUrl }}</a>
                 </ion-label>
             </ion-item>
             <!-- Site info without URL and not clickable. -->

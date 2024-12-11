@@ -33,8 +33,8 @@ import { CoreSites } from './sites';
 @Injectable({ providedIn: 'root' })
 export class CoreLangProvider {
 
-    protected fallbackLanguage = 'en'; // Always use English as fallback language since it contains all strings.
-    protected defaultLanguage = CoreConstants.CONFIG.default_lang || 'en'; // Lang to use if device lang not valid or is forced.
+    protected fallbackLanguage = 'ar'; // Always use English as fallback language since it contains all strings.
+    protected defaultLanguage =  'ar'; //  CoreConstants.CONFIG.default_lang ||
     protected currentLanguage?: string; // Save current language in a variable to speed up the get function.
     protected customStrings: CoreLanguageObject = {}; // Strings defined using the admin tool.
     protected customStringsRaw?: string;
@@ -71,7 +71,7 @@ export class CoreLangProvider {
 
         if (CorePlatform.isAutomated()) {
             // Force current language to English when Behat is running.
-            language = 'en';
+            language = 'ar';
         } else {
             language = await this.getCurrentLanguage();
         }

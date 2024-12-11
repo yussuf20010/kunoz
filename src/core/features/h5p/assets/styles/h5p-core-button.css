@@ -1,7 +1,7 @@
 button.h5p-core-button:visited,
 button.h5p-core-button:link,
 button.h5p-core-button {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Open Sans";
   font-weight: 600;
   font-size: 1em;
   line-height: 1.2;
@@ -35,7 +35,7 @@ button.h5p-core-button:active {
   background: #104888;
 }
 button.h5p-core-button:before {
-  font-family: 'H5P';
+  font-family: 'Open sans';
   padding-right: 0.15em;
   font-size: 1.5em;
   vertical-align: middle;

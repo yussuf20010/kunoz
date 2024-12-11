@@ -11,6 +11,7 @@
         <ion-list class="list-item-limited-width">
             <!-- Site home main contents. -->
             <section *ngIf="section && section.hasContent" class="core-course-module-list-wrapper">
+
                 <ion-item-divider class="course-section ion-text-wrap"
                     [class.item-dimmed]="section.visible === 0 || section.uservisible === false">
                     <ion-label>
@@ -39,15 +40,21 @@
                     </ion-label>
                 </ion-item-divider>
 
-                <ion-item class="ion-text-wrap section-summary" *ngIf="section.summary">
-                    <ion-label>
-                        <core-format-text [text]="section.summary" contextLevel="course" [contextInstanceId]="siteHomeId" />
-                    </ion-label>
-                </ion-item>
+                <div class="summary-container" *ngIf="section.summary">
+                    <div class="summary-content">
+                        <div class="line-divider"></div>
 
+                        <core-format-text [text]="section.summary" contextLevel="course" [contextInstanceId]="siteHomeId">
+                        </core-format-text>
+                    </div>
+                    <div class="line-divider"></div>
+
+                </div>
                 <ng-container *ngFor="let modOrSubsection of section.contents">
                     <core-course-module *ngIf="isModule(modOrSubsection)" [module]="modOrSubsection" [section]="section" />
+
                 </ng-container>
+
             </section>
 
             <!-- Site home items: news, categories, courses, etc. -->
@@ -56,18 +63,23 @@
                     <ng-container [ngSwitch]="item">
                         <ng-container *ngSwitchCase="'LIST_OF_COURSE'">
                             <ng-template *ngTemplateOutlet="allCourseList" />
+
                         </ng-container>
                         <ng-container *ngSwitchCase="'LIST_OF_CATEGORIES'">
                             <ng-template *ngTemplateOutlet="categories" />
+
                         </ng-container>
                         <ng-container *ngSwitchCase="'COURSE_SEARCH_BOX'">
                             <ng-template *ngTemplateOutlet="courseSearch" />
+
                         </ng-container>
                         <ng-container *ngSwitchCase="'ENROLLED_COURSES'">
                             <ng-template *ngTemplateOutlet="enrolledCourseList" />
+
                         </ng-container>
                         <ng-container *ngSwitchCase="'NEWS_ITEMS'">
                             <ng-template *ngTemplateOutlet="news" />
+
                         </ng-container>
                     </ng-container>
                 </ng-container>
@@ -87,7 +99,9 @@
                 <p class="item-heading">{{ 'core.courses.availablecourses' | translate}}</p>
             </ion-label>
         </ion-item>
+
     </ion-card>
+
 </ng-template>
 
 <ng-template #news>
@@ -103,6 +117,7 @@
             </ion-label>
         </ion-item>
     </ion-card>
+
 </ng-template>
 
 <ng-template #enrolledCourseList>
@@ -114,6 +129,7 @@
             </ion-label>
         </ion-item>
     </ion-card>
+
 </ng-template>
 
 <ng-template #courseSearch>
@@ -125,4 +141,5 @@
             </ion-label>
         </ion-item>
     </ion-card>
+
 </ng-template>

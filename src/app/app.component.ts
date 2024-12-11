@@ -28,6 +28,7 @@ import { CorePromisedValue } from '@classes/promised-value';
 import { register } from 'swiper/element/bundle';
 import { CoreWait } from '@singletons/wait';
 import { CoreOpener } from '@singletons/opener';
+import { CoreLang } from '@services/lang';
 
 register();
 
@@ -46,8 +47,8 @@ export class AppComponent implements OnInit, AfterViewInit {
      */
     ngOnInit(): void {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const win = <any> window;
-
+        const win = <any>window;
+        this.setAppDirection();
         CorePlatform.resume.subscribe(() => {
             // Wait a second before setting it to false since in iOS there could be some frozen WS calls.
             setTimeout(() => {
@@ -57,7 +58,6 @@ export class AppComponent implements OnInit, AfterViewInit {
                 }
             }, 1000);
         });
-
         // "Expose" CoreWindow.open.
         win.openWindowSafely = (url: string, name?: string): void => {
             CoreWindow.open(url, name);
@@ -67,7 +67,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         win.onOverrideUrlLoading = (url: string) => {
             CoreWindow.open(url);
         };
-
         // Quit app with back button.
         document.addEventListener('ionBackButton', (event: BackButtonEvent) => {
             // This callback should have the lowest priority in the app.
@@ -80,18 +79,11 @@ export class AppComponent implements OnInit, AfterViewInit {
                     return;
                 }
 
-                // This callback can be called at the same time as Ionic's back navigation callback.
-                // Check if the path changes due to the back navigation handler, to know if we're at root level.
-                // Ionic doc recommends IonRouterOutlet.canGoBack, but there's no easy way to get the current outlet from here.
-                // The path seems to change immediately (0 ms timeout), but use 50ms just in case.
                 await CoreWait.wait(50);
 
                 if (CoreNavigator.getCurrentPath() != initialPath) {
-                    // Ionic has navigated back, nothing else to do.
                     return;
                 }
-
-                // Quit the app.
                 CoreApp.closeApp();
             });
         });
@@ -99,7 +91,20 @@ export class AppComponent implements OnInit, AfterViewInit {
         // @todo Pause Youtube videos in Android when app is put in background or screen is locked?
         // See: https://github.com/moodlehq/moodleapp/blob/ionic3/src/app/app.component.ts#L312
     }
+    /**
+       * Check language on app startup and apply RTL if the language is Arabic.
+       */
+    private async setAppDirection(): Promise<void> {
+        const currentLanguage = await CoreLang.getCurrentLanguage();
 
+        if (currentLanguage === 'ar') {
+            // Set direction to RTL for Arabic language
+            document.documentElement.setAttribute('dir', 'rtl');
+        } else {
+            // Set direction to LTR for other languages
+            document.documentElement.setAttribute('dir', 'ltr');
+        }
+    }
     /**
      * @inheritdoc
      */

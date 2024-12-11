@@ -7,7 +7,7 @@
   src:  url('../fonts/h5p-core-30.eot?h1atjl');
   src:  url('../fonts/h5p-core-30.eot?h1atjl#iefix') format('embedded-opentype'),
     url('../fonts/h5p-core-30.ttf?h1atjl') format('truetype'),
-    url('../fonts/h5p-core-30.woff?h1atjl') format('woff'),
+    url('../fonts/open-sans/alfont_com_AlFont_com_SST-Arabic-Medium.woff2') format('woff2'),
     url('../fonts/h5p-core-30.svg?h1atjl#h5p-core-30') format('svg');
   font-weight: normal;
   font-style: normal;
@@ -18,7 +18,7 @@
   src: url('../fonts/h5p-hub-publish.eot?wy8ylc');
   src: url('../fonts/h5p-hub-publish.eot?wy8ylc#iefix') format('embedded-opentype'),
   url('../fonts/h5p-hub-publish.ttf?wy8ylc') format('truetype'),
-  url('../fonts/h5p-hub-publish.woff?wy8ylc') format('woff'),
+  url('../fonts/open-sans/alfont_com_AlFont_com_SST-Arabic-Medium.woff2') format('woff2'),
   url('../fonts/h5p-hub-publish.svg?wy8ylc#h5p-hub') format('svg');
   font-weight: normal;
   font-style: normal;
@@ -26,7 +26,7 @@
 }
 
 html.h5p-iframe, html.h5p-iframe > body {
-  font-family: Sans-Serif; /* Use the browser's default sans-serif font. (Since Heletica doesn't look nice on Windows, and Arial on OS X.) */
+  font-family: Open sans; /* Use the browser's default sans-serif font. (Since Heletica doesn't look nice on Windows, and Arial on OS X.) */
   width: 100%;
   height: 100%;
   margin: 0;
@@ -106,11 +106,11 @@ body.h5p-semi-fullscreen {
 }
 
 .h5p-enable-fullscreen:before {
-  font-family: 'H5P';
+  font-family: 'Open sans';
   content: "\e88c";
 }
 .h5p-disable-fullscreen:before {
-  font-family: 'H5P';
+  font-family: 'Open sans';
   content: "\e891";
 }
 .h5p-enable-fullscreen, .h5p-disable-fullscreen {
@@ -201,7 +201,7 @@ div.h5p-fullscreen {
   border-top: 1px solid #EEE;
   border-bottom: 1px solid #EEE;
   clear: both;
-  font-family: Sans-Serif;
+  font-family: Open sans;
 }
 .h5p-fullscreen .h5p-actions, .h5p-semi-fullscreen .h5p-actions {
   display: none;
@@ -250,7 +250,7 @@ div.h5p-fullscreen {
   outline-color: #5981A1;
 }
 .h5p-actions button:before {
-  font-family: 'H5P';
+  font-family: 'Open sans';
   font-size: 20px;
   line-height: 23px;
   vertical-align: bottom;
@@ -276,7 +276,7 @@ div.h5p-fullscreen {
   outline: none;
 }
 .h5p-actions .h5p-link:before {
-  font-family: 'H5P';
+  font-family: 'Open sans';
   content: "\e88e";
   vertical-align: bottom;
 }
@@ -353,7 +353,7 @@ div.h5p-fullscreen {
   box-shadow: 0 1px 2px 0 #d0d0d0 inset;
   font-size: 0.875em;
   letter-spacing: 0.065em;
-  font-family: sans-serif;
+  font-family: Open sans;
   white-space: pre;
   line-height: 1.5em;
   height: 2.0714em;
@@ -409,7 +409,7 @@ div.h5p-fullscreen {
   z-index: 3
 }
 .h5p-popup-dialog .h5p-close:after {
-  font-family: 'H5P';
+  font-family: 'Open sans';
   content: "\e894";
 }
 .h5p-popup-dialog .h5p-close:hover:after,
@@ -506,7 +506,7 @@ div.h5p-fullscreen {
   border-radius: 0.25em;
 }
 .h5p-big-button:before {
-  font-family: 'h5p';
+  font-family: 'Open sans';
   content: "\e893";
   line-height: 1;
   font-size: 3em;
@@ -613,7 +613,7 @@ iframe.h5peditor-semi-fullscreen {
 }
 
 .h5p-content-hub-button:before {
-  font-family: "h5p";
+  font-family: "Open sans";
   margin-right: 0.5em;
   font-size: 0.7em;
   line-height: 1;

@@ -1,0 +1,2 @@
+Header add Content-Security-Policy "upgrade-insecure-requests"
+add_header Access-Control-Allow-Origin *;

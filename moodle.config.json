@@ -7,7 +7,7 @@
     "cache_update_frequency_often": 1200000,
     "cache_update_frequency_sometimes": 3600000,
     "cache_update_frequency_rarely": 43200000,
-    "default_lang": "en",
+    "default_lang": "ar",
     "languages": {
         "ar": "العربية",
         "en": "English"
@@ -31,14 +31,14 @@
         "medium": 110,
         "high": 120
     },
-    "customurlscheme": "moodlemobile",
+    "customurlscheme": "kunoz",
     "sites": [{"url":"https://academy.kunoz.net"}],
     "multisitesdisplay": "",
     "sitefindersettings": {},
     "onlyallowlistedsites": false,
-    "forcedefaultlanguage": false,
+    "forcedefaultlanguage": true,
     "privacypolicy": "https://kunoz.net/%d9%85%d9%86-%d9%86%d8%ad%d9%86/",
-    "notificoncolor": "#f98012",
+    "notificoncolor": "#6ccff6",
     "enableanalytics": false,
     "enableonboarding": true,
     "forceColorScheme": "",

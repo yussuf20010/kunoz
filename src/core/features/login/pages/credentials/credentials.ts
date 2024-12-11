@@ -72,6 +72,7 @@ export class CoreLoginCredentialsPage implements OnInit, OnDestroy {
     siteCheckError = '';
     displaySiteUrl = false;
     showLoginForm = true;
+    showPassword = false;
 
     protected siteCheck?: CoreSiteCheckResponse;
     protected eventThrown = false;
@@ -366,6 +367,14 @@ export class CoreLoginCredentialsPage implements OnInit, OnDestroy {
      */
     openSettings(): void {
         CoreNavigator.navigate('/settings');
+    }
+
+    /**
+     * Toggle password visibility.
+     */
+    togglePasswordVisibility(): void {
+        this.showPassword = !this.showPassword;
+        this.credForm.get('password')?.updateValueAndValidity();
     }
 
     /**

@@ -1,17 +1,3 @@
-// (C) Copyright 2015 Moodle Pty Ltd.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { CoreSites } from '@services/sites';
@@ -34,6 +20,7 @@ import { Translate } from '@singletons';
 import { CoreUrl } from '@singletons/url';
 import { CoreLoadings } from '@services/loadings';
 import { CoreTime } from '@singletons/time';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Page that displays info about a user.
@@ -60,7 +47,7 @@ export class CoreUserAboutPage implements OnInit, OnDestroy {
     protected site!: CoreSite;
     protected obsProfileRefreshed?: CoreEventObserver;
 
-    constructor() {
+    constructor(private translate: TranslateService) {
         try {
             this.site = CoreSites.getRequiredCurrentSite();
         } catch (error) {
@@ -78,7 +65,6 @@ export class CoreUserAboutPage implements OnInit, OnDestroy {
             this.user.email = data.user.email;
         }, CoreSites.getCurrentSiteId());
     }
-
     /**
      * @inheritdoc
      */
@@ -98,6 +84,25 @@ export class CoreUserAboutPage implements OnInit, OnDestroy {
             this.userLoaded = true;
         });
     }
+    cleancleanTranslation(value: string): string {
+        // Regex to remove the multilingual tags like {mlang ar} and {mlang other}
+        const cleanedValue = value.replace(/{mlang\s+\w+}/g, '').trim();
+
+        // Match for Arabic and English translations inside the {mlang} tags
+        const matches = value.match(/{mlang ar}([^{}]*){mlang}.*{mlang other}([^{}]*){mlang}/);
+
+        if (matches && matches.length > 2) {
+            // Get the current language from the translate service
+            const currentLang = this.translate.currentLang;
+
+            // If the current language is 'ar', return the Arabic translation; otherwise, return the English translation.
+            return currentLang === 'ar' ? matches[1] : matches[2];
+        }
+
+        // If no match is found or translation tags are not present, return the cleaned value.
+        return cleanedValue;
+    }
+
 
     /**
      * Fetches the user data.
@@ -107,6 +112,22 @@ export class CoreUserAboutPage implements OnInit, OnDestroy {
     async fetchUser(): Promise<void> {
         try {
             const user = await CoreUser.getProfile(this.userId, this.courseId);
+
+            // Clean the custom fields or any other multilingual data
+            if (user.customfields) {
+                user.customfields = user.customfields.map(field => {
+                    if (field) {
+                        // Translate and clean both the value and the label
+                        if (field.value) {
+                            field.value = this.cleancleanTranslation(field.value);
+                        }
+                        if (field.name) {
+                            field.name = this.cleancleanTranslation(field.name);
+                        }
+                    }
+                    return field;
+                });
+            }
 
             this.interests = user.interests ?
                 user.interests.split(',').map(interest => interest.trim()) :
@@ -119,13 +140,30 @@ export class CoreUserAboutPage implements OnInit, OnDestroy {
             this.title = user.fullname;
 
             this.fillTimezone();
-
             await this.checkUserImageUpdated();
         } catch (error) {
             CoreDomUtils.showErrorModalDefault(error, 'core.user.errorloaduser', true);
         }
     }
 
+
+    /**
+     * format city name.
+     *
+     * @param city city name.
+     */
+    formatCity(city: string): string {
+        if (!city) return ''; // Handle missing city value.
+
+        // Regex to extract Arabic and other language content.
+        const matches = city.match(/{mlang ar}([^{}]*){mlang}.*{mlang other}([^{}]*){mlang}/);
+        if (matches && matches.length > 2) {
+            const currentLang = this.translate.currentLang;
+            return currentLang === 'ar' ? matches[1] : matches[2]; // Return Arabic or English.
+        }
+
+        return city; // Return original string if it doesn't match the pattern.
+    }
     /**
      * Check if current user image has changed.
      *
@@ -285,9 +323,11 @@ export class CoreUserAboutPage implements OnInit, OnDestroy {
      * @param interest Interest name.
      */
     openInterest(interest: string): void {
-        CoreNavigator.navigateToSitePath('/tag/index', { params: {
-            tagName: interest,
-        } });
+        CoreNavigator.navigateToSitePath('/tag/index', {
+            params: {
+                tagName: interest,
+            }
+        });
     }
 
     /**

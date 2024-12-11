@@ -102,7 +102,7 @@ button.h5p-confirmation-dialog-exit:hover {
 }
 
 .h5p-confirmation-dialog-exit:before {
-  font-family: "H5P";
+  font-family: "Open sans";
   content: "\e890";
 }
 
@@ -123,7 +123,7 @@ button.h5p-confirmation-dialog-exit:hover {
 }
 
 .h5p-confirmation-dialog-popup.offline .count-down {
-  font-family: Arial;
+  font-family: Open sans;
   margin-top: 0.15em;
   color: #000;
 }

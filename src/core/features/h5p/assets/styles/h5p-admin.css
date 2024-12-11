@@ -50,15 +50,15 @@
   margin: 0.125em 0.125em 0 0.125em;
 }
 .h5p-admin-upgrade-library:before {
-  font-family: 'H5P';
+  font-family: 'Open sans';
   content: "\e888";
 }
 .h5p-admin-view-library:before {
-  font-family: 'H5P';
+  font-family: 'Open sans';
   content: "\e889";
 }
 .h5p-admin-delete-library:before {
-  font-family: 'H5P';
+  font-family: 'Open sans';
   content: "\e890";
 }
 
